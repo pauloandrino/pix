@@ -1,0 +1,12 @@
+version: '3'
+services:
+  mysql:
+    container_name: pix-mysql
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=pix
+      - MYSQL_USER=pix
+      - MYSQL_PASSWORD=pix
+    ports:
+      - "3306:3306"
