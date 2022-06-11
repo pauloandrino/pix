@@ -79,7 +79,10 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
       HttpHeaders headers,
       HttpStatus status,
       WebRequest request) {
-    return handleValidationInternal(ex, ex.getBindingResult(), headers, status, request);
+
+    var httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;  // Sobrescrevendo de 400 para 422, conforme descrito no case
+
+    return handleValidationInternal(ex, ex.getBindingResult(), headers, httpStatus, request);
   }
 
   private ResponseEntity<Object> handleValidationInternal(
