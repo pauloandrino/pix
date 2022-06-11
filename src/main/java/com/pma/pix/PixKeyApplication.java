@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PixApplication {
+public class PixKeyApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(PixApplication.class, args);
+    SpringApplication.run(PixKeyApplication.class, args);
   }
 }
