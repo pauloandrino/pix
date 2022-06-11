@@ -1,6 +1,7 @@
 package com.pma.pix.domain.model;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Range;
 
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity()
@@ -55,4 +57,7 @@ public class PixKey {
   @Enumerated(EnumType.STRING)
   @NotNull
   private TipoPessoa tipoPessoa;
+
+  @CreationTimestamp
+  private OffsetDateTime dataCriacao;
 }

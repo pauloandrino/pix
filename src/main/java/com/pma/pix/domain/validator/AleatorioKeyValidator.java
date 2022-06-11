@@ -4,7 +4,7 @@ import com.pma.pix.domain.model.PixKey;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AleatorioKeyValidator implements TypeKeyValidator {
+public class AleatorioKeyValidator implements Validators {
 
   @Override
   public void validate(PixKey pixKey) {

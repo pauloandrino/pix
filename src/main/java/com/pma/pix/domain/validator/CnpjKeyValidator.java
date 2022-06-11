@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CnpjKeyValidator implements TypeKeyValidator {
+public class CnpjKeyValidator implements Validators {
 
   private final CNPJValidator cnpjValidator;
 

@@ -9,6 +9,7 @@ CREATE TABLE chave_pix
     nome_correntista      VARCHAR(30) NOT NULL,
     sobrenome_correntista VARCHAR(45) NOT NULL,
     tipo_pessoa           VARCHAR(1)  NOT NULL,
+    data_criacao          DATETIME    NOT NULL,
 
     PRIMARY KEY (id),
     unique key uk_chave (chave)

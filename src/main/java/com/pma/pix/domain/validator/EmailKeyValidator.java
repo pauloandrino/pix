@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.regex.Pattern;
 
 @Component
-public class EmailKeyValidator implements TypeKeyValidator {
+public class EmailKeyValidator implements Validators {
 
   String emailRegex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
 
