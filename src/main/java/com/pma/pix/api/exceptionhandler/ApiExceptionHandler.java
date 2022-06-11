@@ -3,6 +3,8 @@ package com.pma.pix.api.exceptionhandler;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
+import com.pma.pix.domain.exception.NegocioException;
+import com.pma.pix.domain.exception.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
@@ -238,51 +240,60 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   /*
-   TODO: Usar quando fazer busca por ID e não encontrar
+     TODO: Usar quando fazer busca por ID e não encontrar
 
-  @ExceptionHandler(EntidadeNaoEncontradaException.class)
-  public ResponseEntity<?> handleEstadoNaoEncontradoException(
-      EntidadeNaoEncontradaException ex, WebRequest request) {
+    @ExceptionHandler(EntidadeNaoEncontradaException.class)
+    public ResponseEntity<?> handleEstadoNaoEncontradoException(
+        EntidadeNaoEncontradaException ex, WebRequest request) {
 
-    HttpStatus status = HttpStatus.NOT_FOUND;
+      HttpStatus status = HttpStatus.NOT_FOUND;
+      String detail = ex.getMessage();
+      ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
+
+      Problem problem = createProblemBuilder(status, problemType, detail).userMessage(detail).build();
+
+      return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+    }
+
+
+  TODO: Usar ao implementar o save no banco de dados
+
+      @ExceptionHandler(EntidadeEmUsoException.class)
+      public ResponseEntity<?> handleEntidadeEmUsoException(
+          EntidadeEmUsoException ex, WebRequest request) {
+
+        HttpStatus status = HttpStatus.CONFLICT;
+        String detail = ex.getMessage();
+        ProblemType problemType = ProblemType.ENTIDADE_EM_USO;
+
+        Problem problem = createProblemBuilder(status, problemType, detail).userMessage(detail).build();
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+      }
+    */
+
+  @ExceptionHandler({ValidationException.class})
+  public ResponseEntity<?> handleValidationException(ValidationException ex, WebRequest request) {
+    HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
     String detail = ex.getMessage();
-    ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
+    ProblemType problemType = ProblemType.DADOS_INVALIDOS;
 
     Problem problem = createProblemBuilder(status, problemType, detail).userMessage(detail).build();
 
     return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
   }
 
+  @ExceptionHandler(NegocioException.class)
+  public ResponseEntity<?> handleNegocioException(NegocioException ex, WebRequest request) {
 
-TODO: Usar ao implementar o save no banco de dados
+    HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+    String detail = ex.getMessage();
+    ProblemType problemType = ProblemType.ERRO_NEGOCIO;
 
-    @ExceptionHandler(EntidadeEmUsoException.class)
-    public ResponseEntity<?> handleEntidadeEmUsoException(
-        EntidadeEmUsoException ex, WebRequest request) {
+    Problem problem = createProblemBuilder(status, problemType, detail).userMessage(detail).build();
 
-      HttpStatus status = HttpStatus.CONFLICT;
-      String detail = ex.getMessage();
-      ProblemType problemType = ProblemType.ENTIDADE_EM_USO;
-
-      Problem problem = createProblemBuilder(status, problemType, detail).userMessage(detail).build();
-
-      return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
-    }
-
-    TODO: Usar quando aplicar as regras de negócio
-
-    @ExceptionHandler(NegocioException.class)
-    public ResponseEntity<?> handleNegocioException(NegocioException ex, WebRequest request) {
-
-      HttpStatus status = HttpStatus.BAD_REQUEST;
-      String detail = ex.getMessage();
-      ProblemType problemType = ProblemType.ERRO_NEGOCIO;
-
-      Problem problem = createProblemBuilder(status, problemType, detail).userMessage(detail).build();
-
-      return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
-    }
-  */
+    return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+  }
 
   @Override
   protected ResponseEntity<Object> handleExceptionInternal(

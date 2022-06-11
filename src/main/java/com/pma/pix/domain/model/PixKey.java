@@ -1,4 +1,4 @@
-package com.pma.pix.domain.domain;
+package com.pma.pix.domain.model;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
