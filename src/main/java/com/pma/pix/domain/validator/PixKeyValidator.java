@@ -13,6 +13,9 @@ public class PixKeyValidator {
 
   private final CpfKeyValidator cpfKeyValidator;
   private final CnpjKeyValidator cnpjKeyValidator;
+  private final EmailKeyValidator emailKeyValidator;
+  private final CelularKeyValidator celularKeyValidator;
+  private final AleatorioKeyValidator aleatorioKeyValidator;
 
   public void validate(PixKey pixKey) {
     getValidators().get(pixKey.getTipoChave()).validate(pixKey);
@@ -24,6 +27,9 @@ public class PixKeyValidator {
 
     validators.put(TipoChave.CPF, cpfKeyValidator);
     validators.put(TipoChave.CNPJ, cnpjKeyValidator);
+    validators.put(TipoChave.EMAIL, emailKeyValidator);
+    validators.put(TipoChave.CELULAR, celularKeyValidator);
+    validators.put(TipoChave.ALEATORIO, aleatorioKeyValidator);
 
     return validators;
   }
