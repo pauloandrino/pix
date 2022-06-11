@@ -17,7 +17,7 @@ public class PixKeyInput {
 
   @Size(max = 77)
   @NotBlank
-  private String chaveValor;
+  private String chave;
 
   @StringEnumeration(enumClass = TipoConta.class)
   @NotBlank
@@ -25,11 +25,11 @@ public class PixKeyInput {
 
   @Range(min = 1, max = 9999)
   @NotNull
-  private Integer numeroAgencia;
+  private Integer agencia;
 
   @Range(min = 1, max = 99999999)
   @NotNull
-  private Integer numeroConta;
+  private Integer conta;
 
   @Size(max = 30)
   @NotBlank

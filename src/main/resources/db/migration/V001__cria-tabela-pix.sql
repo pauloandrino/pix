@@ -1,6 +1,6 @@
 CREATE TABLE chave_pix
 (
-    id                    VARCHAR(36) NOT NULL,
+    id                    BINARY(16) NOT NULL,
     tipo_chave            VARCHAR(9)  NOT NULL,
     chave                 VARCHAR(77) NOT NULL,
     tipo_conta            VARCHAR(10) NOT NULL,
