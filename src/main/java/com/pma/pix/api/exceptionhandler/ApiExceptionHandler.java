@@ -3,6 +3,7 @@ package com.pma.pix.api.exceptionhandler;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
+import com.pma.pix.domain.exception.EntidadeNaoEncontradaException;
 import com.pma.pix.domain.exception.NegocioException;
 import com.pma.pix.domain.exception.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -292,6 +293,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
     String detail = ex.getMessage();
     ProblemType problemType = ProblemType.ERRO_NEGOCIO;
+
+    Problem problem = createProblemBuilder(status, problemType, detail).userMessage(detail).build();
+
+    return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+  }
+
+  @ExceptionHandler(EntidadeNaoEncontradaException.class)
+  public ResponseEntity<?> handleNegocioException(EntidadeNaoEncontradaException ex, WebRequest request) {
+
+    HttpStatus status = HttpStatus.NOT_FOUND;
+    String detail = ex.getMessage();
+    ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
 
     Problem problem = createProblemBuilder(status, problemType, detail).userMessage(detail).build();
 

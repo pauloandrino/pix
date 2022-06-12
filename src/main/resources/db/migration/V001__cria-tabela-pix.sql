@@ -7,9 +7,10 @@ CREATE TABLE chave_pix
     agencia               BIGINT(4) NOT NULL,
     conta                 BIGINT(8) NOT NULL,
     nome_correntista      VARCHAR(30) NOT NULL,
-    sobrenome_correntista VARCHAR(45) NOT NULL,
+    sobrenome_correntista VARCHAR(45),
     tipo_pessoa           VARCHAR(1)  NOT NULL,
-    data_criacao          DATETIME    NOT NULL,
+    data_ativacao          DATETIME    NOT NULL,
+    data_inativacao       DATETIME,
 
     PRIMARY KEY (id),
     unique key uk_chave (chave)

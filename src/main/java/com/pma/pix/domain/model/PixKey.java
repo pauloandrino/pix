@@ -59,5 +59,7 @@ public class PixKey {
   private TipoPessoa tipoPessoa;
 
   @CreationTimestamp
-  private OffsetDateTime dataCriacao;
+  private OffsetDateTime dataAtivacao;
+
+  private OffsetDateTime dataInativacao;
 }

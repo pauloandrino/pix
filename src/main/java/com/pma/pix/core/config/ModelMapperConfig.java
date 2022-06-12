@@ -1,4 +1,4 @@
-package com.pma.pix.core.modelmapper;
+package com.pma.pix.core.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

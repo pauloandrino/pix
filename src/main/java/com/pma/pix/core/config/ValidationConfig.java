@@ -1,4 +1,4 @@
-package com.pma.pix.core.modelmapper;
+package com.pma.pix.core.config;
 
 import br.com.caelum.stella.validation.CNPJValidator;
 import br.com.caelum.stella.validation.CPFValidator;
