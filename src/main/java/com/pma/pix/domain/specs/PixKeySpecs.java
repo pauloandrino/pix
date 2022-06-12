@@ -10,6 +10,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class PixKeySpecs {
 
@@ -17,6 +18,10 @@ public class PixKeySpecs {
   public static Specification<PixKey> querYFilter(PixKeyFilter pixKeyFilter) {
     return ((root, query, criteriaBuilder) -> {
       var predicates = new ArrayList<Predicate>();
+
+      if (pixKeyFilter.getId() != null) {
+        predicates.add(criteriaBuilder.equal(root.get("id"), UUID.fromString(pixKeyFilter.getId())));
+      }
 
       if (pixKeyFilter.getTipoChave() != null) {
         predicates.add(criteriaBuilder.equal(root.get("tipoChave"), pixKeyFilter.getTipoChave()));
