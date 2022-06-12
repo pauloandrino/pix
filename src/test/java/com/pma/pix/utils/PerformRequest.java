@@ -18,4 +18,19 @@ public class PerformRequest {
                 .content(JsonMapper.asJsonString(object)))
         .andDo(print());
   }
+
+  public static ResultActions get(MockMvc mockMvc, String apiUrl) throws Exception {
+    return mockMvc
+        .perform(MockMvcRequestBuilders.get(apiUrl).contentType(MediaType.APPLICATION_JSON))
+        .andDo(print());
+  }
+
+  public static ResultActions put(MockMvc mockMvc, String apiUrl, Object object) throws Exception {
+    return mockMvc
+        .perform(
+            MockMvcRequestBuilders.put(apiUrl)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonMapper.asJsonString(object)))
+        .andDo(print());
+  }
 }
