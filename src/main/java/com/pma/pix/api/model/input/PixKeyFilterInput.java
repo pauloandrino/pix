@@ -1,5 +1,7 @@
 package com.pma.pix.api.model.input;
 
+import com.pma.pix.api.validator.PixKeyFilterDateValidation;
+import com.pma.pix.api.validator.PixKeyFilterOnlyIdValidation;
 import com.pma.pix.api.validator.StringEnumeration;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
@@ -7,6 +9,8 @@ import org.hibernate.validator.constraints.Range;
 import javax.validation.constraints.Size;
 
 @Data
+@PixKeyFilterOnlyIdValidation
+@PixKeyFilterDateValidation
 public class PixKeyFilterInput {
 
   private String id;

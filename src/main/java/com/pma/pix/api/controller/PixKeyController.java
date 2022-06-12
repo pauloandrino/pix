@@ -34,7 +34,7 @@ public class PixKeyController {
   }
 
   @GetMapping
-  public List<PixKeyModel> listar(PixKeyFilterInput filter) {
+  public List<PixKeyModel> listar(@Valid PixKeyFilterInput filter) {
 
     var pixKeyFilter = pixKeyDisassembler.toDomainObject(filter);
 
