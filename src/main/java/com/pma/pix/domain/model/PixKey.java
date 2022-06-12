@@ -1,6 +1,9 @@
 package com.pma.pix.domain.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.With;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Range;
@@ -20,6 +23,9 @@ import java.util.UUID;
 @Entity()
 @Table(name = "chave_pix")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@With
 public class PixKey {
 
   @Id
@@ -58,8 +64,7 @@ public class PixKey {
   @NotNull
   private TipoPessoa tipoPessoa;
 
-  @CreationTimestamp
-  private OffsetDateTime dataAtivacao;
+  @CreationTimestamp private OffsetDateTime dataAtivacao;
 
   private OffsetDateTime dataInativacao;
 }

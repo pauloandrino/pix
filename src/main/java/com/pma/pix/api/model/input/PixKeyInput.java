@@ -1,7 +1,10 @@
 package com.pma.pix.api.model.input;
 
 import com.pma.pix.api.validator.StringEnumeration;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.With;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
@@ -9,6 +12,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@With
 public class PixKeyInput {
 
   @StringEnumeration(enumClass = TipoChave.class)

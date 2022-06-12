@@ -4,10 +4,10 @@ import com.pma.pix.api.assembler.PixKeyDisassembler;
 import com.pma.pix.api.assembler.PixKeyModelAssembler;
 import com.pma.pix.api.model.PixKeyAlteracaoModel;
 import com.pma.pix.api.model.PixKeyIdModel;
+import com.pma.pix.api.model.PixKeyModel;
 import com.pma.pix.api.model.input.PixKeyAlterarInput;
 import com.pma.pix.api.model.input.PixKeyFilterInput;
 import com.pma.pix.api.model.input.PixKeyInput;
-import com.pma.pix.api.model.PixKeyModel;
 import com.pma.pix.domain.service.PixKeyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pixKey")
+@RequestMapping("/pixkey")
 @RequiredArgsConstructor
 public class PixKeyController {
 
@@ -49,6 +49,5 @@ public class PixKeyController {
 
     var pixKey = pixKeyDisassembler.toDomainObject(pixKeyAlterarInput);
     return pixKeyModelAssembler.toAlteracaoModel(pixKeyService.alterar(pixKey));
-
   }
 }
