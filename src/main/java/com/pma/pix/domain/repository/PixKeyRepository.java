@@ -6,8 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface PixKeyRepository extends JpaRepository<PixKey, String>, JpaSpecificationExecutor<PixKey> {
+import java.util.UUID;
 
-    long countByTipoPessoaAndAgenciaAndConta(TipoPessoa tipo, Integer agencia, Integer conta);
+@Repository
+public interface PixKeyRepository
+    extends JpaRepository<PixKey, UUID>, JpaSpecificationExecutor<PixKey> {
+
+  long countByTipoPessoaAndAgenciaAndConta(TipoPessoa tipo, Integer agencia, Integer conta);
 }

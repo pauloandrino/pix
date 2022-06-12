@@ -2,7 +2,9 @@ package com.pma.pix.api.controller;
 
 import com.pma.pix.api.assembler.PixKeyDisassembler;
 import com.pma.pix.api.assembler.PixKeyModelAssembler;
+import com.pma.pix.api.model.PixKeyAlteracaoModel;
 import com.pma.pix.api.model.PixKeyIdModel;
+import com.pma.pix.api.model.input.PixKeyAlterarInput;
 import com.pma.pix.api.model.input.PixKeyFilterInput;
 import com.pma.pix.api.model.input.PixKeyInput;
 import com.pma.pix.api.model.PixKeyModel;
@@ -10,6 +12,7 @@ import com.pma.pix.domain.service.PixKeyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,5 +42,13 @@ public class PixKeyController {
     var pixKeyFilter = pixKeyDisassembler.toDomainObject(filter);
 
     return pixKeyModelAssembler.toModel(pixKeyService.findAll(pixKeyFilter));
+  }
+
+  @PutMapping
+  public PixKeyAlteracaoModel alterar(@RequestBody @Valid PixKeyAlterarInput pixKeyAlterarInput) {
+
+    var pixKey = pixKeyDisassembler.toDomainObject(pixKeyAlterarInput);
+    return pixKeyModelAssembler.toAlteracaoModel(pixKeyService.alterar(pixKey));
+
   }
 }

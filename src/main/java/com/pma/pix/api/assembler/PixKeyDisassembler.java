@@ -1,5 +1,6 @@
 package com.pma.pix.api.assembler;
 
+import com.pma.pix.api.model.input.PixKeyAlterarInput;
 import com.pma.pix.api.model.input.PixKeyFilterInput;
 import com.pma.pix.api.model.input.PixKeyInput;
 import com.pma.pix.domain.model.PixKey;
@@ -20,5 +21,9 @@ public class PixKeyDisassembler {
 
   public PixKeyFilter toDomainObject(PixKeyFilterInput filter) {
     return modelMapper.map(filter, PixKeyFilter.class);
+  }
+
+  public PixKey toDomainObject(PixKeyAlterarInput pixKeyAlterarInput) {
+    return modelMapper.map(pixKeyAlterarInput, PixKey.class);
   }
 }

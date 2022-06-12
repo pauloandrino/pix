@@ -1,5 +1,6 @@
 package com.pma.pix.api.assembler;
 
+import com.pma.pix.api.model.PixKeyAlteracaoModel;
 import com.pma.pix.api.model.PixKeyIdModel;
 import com.pma.pix.api.model.PixKeyModel;
 import com.pma.pix.domain.model.PixKey;
@@ -22,6 +23,10 @@ public class PixKeyModelAssembler {
 
   public PixKeyModel toModel(PixKey pixKey) {
     return modelMapper.map(pixKey, PixKeyModel.class);
+  }
+
+  public PixKeyAlteracaoModel toAlteracaoModel(PixKey pixKey) {
+    return modelMapper.map(pixKey, PixKeyAlteracaoModel.class);
   }
 
   public List<PixKeyModel> toModel(List<PixKey> pixKeys) {

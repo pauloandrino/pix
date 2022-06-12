@@ -2,6 +2,8 @@ package com.pma.pix.domain.service;
 
 import com.pma.pix.domain.exception.EntidadeDuplicadaException;
 import com.pma.pix.domain.exception.EntidadeNaoEncontradaException;
+import com.pma.pix.domain.exception.NegocioException;
+import com.pma.pix.domain.mapper.PixKeyMapper;
 import com.pma.pix.domain.model.PixKey;
 import com.pma.pix.domain.model.PixKeyFilter;
 import com.pma.pix.domain.repository.PixKeyRepository;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +27,8 @@ public class PixKeyService {
 
   private final PixKeyRepository pixKeyRepository;
   private final PixKeyValidator pixKeyValidator;
+
+  private final PixKeyMapper pixKeyMapper;
 
   public PixKey salvar(PixKey pixKey) {
     log.info("Salvando a chave pix [{}]", pixKey.toString());
@@ -44,6 +49,8 @@ public class PixKeyService {
   }
 
   public List<PixKey> findAll(PixKeyFilter pixKeyFilter) {
+    log.info("Buscando chaves pix com o filtro [{}]", pixKeyFilter.toString());
+
     var pixKeys = pixKeyRepository.findAll(PixKeySpecs.querYFilter(pixKeyFilter));
 
     if (pixKeys.isEmpty()) {
@@ -52,5 +59,49 @@ public class PixKeyService {
     }
 
     return pixKeys;
+  }
+
+  public PixKey alterar(PixKey pixKeyAtualizado) {
+
+    var pixKeySalvo = buscarOuFalhar(pixKeyAtualizado.getId());
+
+    if (pixKeySalvo.getDataInativacao() != null) {
+      throw new NegocioException("Chave inativa não pode ser alterada");
+    }
+
+    pixKeyMapper.merge(pixKeyAtualizado, pixKeySalvo);
+
+    log.info(
+        "Atualizando chave pix id [{}], chave atualizada [{}]",
+        pixKeySalvo.getId(),
+        pixKeySalvo.toString());
+
+    pixKeyRepository.save(pixKeySalvo);
+
+    return pixKeySalvo;
+  }
+
+  public PixKey buscarOuFalhar(UUID pixKeyId) {
+    return pixKeyRepository
+        .findById(pixKeyId)
+        .orElseThrow(() -> new EntidadeNaoEncontradaException("Pix Key não foi encontrada"));
+  }
+
+  private void validateChanges(PixKey pixKeySalvo, PixKey pixKeyAtualizado) {
+
+    if (!pixKeyAtualizado.getId().equals(pixKeySalvo.getId())) {
+      throw new NegocioException("ID da chave não pode ser alterada");
+    }
+    /*   NÂO RECEBE NO INPUT
+
+        if (!pixKeyAtualizado.getTipoChave().equals(pixKeySalvo.getTipoChave())) {
+          throw new NegocioException("Tipo da chave não pode ser alterada");
+        }
+
+        if (!pixKeyAtualizado.getChave().equals(pixKeySalvo.getChave())) {
+          throw new NegocioException("Chave não pode ser alterada");
+        }
+    */
+
   }
 }
