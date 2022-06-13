@@ -2,7 +2,10 @@ package com.pma.pix.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.With;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -22,10 +25,12 @@ import java.util.UUID;
 
 @Entity()
 @Table(name = "chave_pix")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @With
+@ToString
 public class PixKey {
 
   @Id

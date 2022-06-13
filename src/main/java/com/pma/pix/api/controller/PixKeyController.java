@@ -41,7 +41,7 @@ public class PixKeyController {
 
     var pixKeyFilter = pixKeyDisassembler.toDomainObject(filter);
 
-    return pixKeyModelAssembler.toModel(pixKeyService.findAll(pixKeyFilter));
+    return pixKeyModelAssembler.toModel(pixKeyService.buscar(pixKeyFilter));
   }
 
   @PutMapping

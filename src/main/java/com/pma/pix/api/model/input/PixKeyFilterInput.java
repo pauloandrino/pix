@@ -4,11 +4,14 @@ import com.pma.pix.api.validator.PixKeyFilterDateValidation;
 import com.pma.pix.api.validator.PixKeyFilterOnlyIdValidation;
 import com.pma.pix.api.validator.StringEnumeration;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Size;
 
-@Data
+@Getter
+@Setter
 @PixKeyFilterOnlyIdValidation
 @PixKeyFilterDateValidation
 public class PixKeyFilterInput {

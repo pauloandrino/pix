@@ -8,6 +8,5 @@ public class AleatorioKeyValidator implements Validators {
 
   @Override
   public void validate(PixKey pixKey) {
-    System.out.println("VALIDAR chave aleatorio");
   }
 }

@@ -1,11 +1,14 @@
 package com.pma.pix.api.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
-@Data
+@Getter
+@Setter
 public class PixKeyModel {
 
   private String id;

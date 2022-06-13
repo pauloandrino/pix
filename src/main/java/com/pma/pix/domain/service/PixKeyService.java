@@ -48,14 +48,14 @@ public class PixKeyService {
     }
   }
 
-  public List<PixKey> findAll(PixKeyFilter pixKeyFilter) {
+  public List<PixKey> buscar(PixKeyFilter pixKeyFilter) {
     log.info("Buscando chaves pix com o filtro [{}]", pixKeyFilter.toString());
 
     var pixKeys = pixKeyRepository.findAll(PixKeySpecs.querYFilter(pixKeyFilter));
 
     if (pixKeys.isEmpty()) {
       throw new EntidadeNaoEncontradaException(
-          "Não doi encontrado nenhuma pix key com os filtros requisitados");
+          "Não foi encontrado nenhuma pix key com os filtros requisitados");
     }
 
     return pixKeys;
@@ -85,23 +85,5 @@ public class PixKeyService {
     return pixKeyRepository
         .findById(pixKeyId)
         .orElseThrow(() -> new EntidadeNaoEncontradaException("Pix Key não foi encontrada"));
-  }
-
-  private void validateChanges(PixKey pixKeySalvo, PixKey pixKeyAtualizado) {
-
-    if (!pixKeyAtualizado.getId().equals(pixKeySalvo.getId())) {
-      throw new NegocioException("ID da chave não pode ser alterada");
-    }
-    /*   NÂO RECEBE NO INPUT
-
-        if (!pixKeyAtualizado.getTipoChave().equals(pixKeySalvo.getTipoChave())) {
-          throw new NegocioException("Tipo da chave não pode ser alterada");
-        }
-
-        if (!pixKeyAtualizado.getChave().equals(pixKeySalvo.getChave())) {
-          throw new NegocioException("Chave não pode ser alterada");
-        }
-    */
-
   }
 }

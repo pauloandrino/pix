@@ -18,6 +18,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -87,7 +88,7 @@ class PixKeyControllerTest {
 
   @Test
   void shouldListPixKeysGivenValidRequest() throws Exception {
-    when(pixKeyService.findAll(any())).thenReturn(getPixKeysTemplate());
+    when(pixKeyService.buscar(any())).thenReturn(getPixKeysTemplate());
 
     var mvcResult =
         PerformRequest.get(mockMvc, PIX_KEY_BASE_URL).andExpect(status().isOk()).andReturn();
@@ -95,7 +96,7 @@ class PixKeyControllerTest {
 
   @Test
   void shouldReturnUnprocessableEntityGivenNegocioExceptionOnListar() throws Exception {
-    when(pixKeyService.findAll(any())).thenThrow(new NegocioException(("Algum Erro de negocio")));
+    when(pixKeyService.buscar(any())).thenThrow(new NegocioException(("Algum Erro de negocio")));
 
     var mvcResult =
         PerformRequest.get(mockMvc, PIX_KEY_BASE_URL)
@@ -129,7 +130,7 @@ class PixKeyControllerTest {
 
   @Test
   void shouldNotFoundGivenEntidadeNaoEncontradaExceptionOnListar() throws Exception {
-    when(pixKeyService.findAll(any()))
+    when(pixKeyService.buscar(any()))
         .thenThrow(new EntidadeNaoEncontradaException(("Pix key nao encontrada")));
 
     var mvcResult =
@@ -180,6 +181,59 @@ class PixKeyControllerTest {
     var mvcResult =
         PerformRequest.put(mockMvc, PIX_KEY_BASE_URL, getPixKeyAlterarTemplate())
             .andExpect(status().isNotFound())
+            .andReturn();
+  }
+
+  @Test
+  void shouldReturnBadRequestGivenEmptyBodyRequest() throws Exception {
+    when(pixKeyService.salvar(any())).thenReturn(getPixKeyTemplate());
+
+    var mvcResult =
+        PerformRequest.post(mockMvc, PIX_KEY_BASE_URL)
+            .andExpect(status().isBadRequest())
+            .andReturn();
+  }
+
+  @Test
+  void shouldReturnBadRequestGivenInvalidBody() throws Exception {
+    when(pixKeyService.salvar(any())).thenReturn(getPixKeyTemplate());
+
+    var body =
+        "{\n"
+            + "    \"tipoChave\": \"EMAIL\",\n"
+            + "    \"chave\": \"p22a12@ema.com\",\n"
+            + "    \"tipoConta\": \"CORRENTE\",\n"
+            + "    \"agencia\": \"872s\",\n"
+            + "    \"conta\": 838992,\n"
+            + "    \"nomeCorrentista\": \"Rafael\",\n"
+            + "    \"sobrenomeCorrentista\": \"Correa\",\n"
+            + "    \"tipoPessoa\": \"F\"\n"
+            + "}";
+
+    var mvcResult =
+        PerformRequest.post(mockMvc, PIX_KEY_BASE_URL, body)
+            .andExpect(status().isBadRequest())
+            .andReturn();
+  }
+
+  @Test
+  void shouldReturnBadRequestGivenInvalidMediaType() throws Exception {
+    when(pixKeyService.salvar(any())).thenReturn(getPixKeyTemplate());
+
+    var mvcResult =
+        PerformRequest.post(
+                mockMvc, PIX_KEY_BASE_URL, getPixKeyTemplate(), MediaType.APPLICATION_PDF)
+            .andExpect(status().isUnsupportedMediaType())
+            .andReturn();
+  }
+
+  @Test
+  void shouldReturnInternalErrorRequestGivenSomeError() throws Exception {
+    when(pixKeyService.salvar(any())).thenThrow(new NullPointerException());
+
+    var mvcResult =
+        PerformRequest.post(mockMvc, PIX_KEY_BASE_URL, getPixKeyInputTemplate())
+            .andExpect(status().isInternalServerError())
             .andReturn();
   }
 }

@@ -3,10 +3,13 @@ package com.pma.pix.templates;
 import com.pma.pix.api.model.input.PixKeyAlterarInput;
 import com.pma.pix.api.model.input.PixKeyInput;
 import com.pma.pix.domain.model.PixKey;
+import com.pma.pix.domain.model.PixKeyFilter;
 import com.pma.pix.domain.model.TipoChave;
 import com.pma.pix.domain.model.TipoConta;
 import com.pma.pix.domain.model.TipoPessoa;
 
+import java.time.OffsetDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,11 +50,17 @@ public class PixKeyTemplate {
         .withConta(CONTA)
         .withNomeCorrentista(NOME_CORRENTISTA)
         .withSobrenomeCorrentista(SOBRENOME_CORRENTISTA)
-        .withTipoPessoa(TipoPessoa.valueOf(TIPO_PESSOA));
+        .withTipoPessoa(TipoPessoa.valueOf(TIPO_PESSOA))
+        .withDataAtivacao(OffsetDateTime.now())
+        .withDataInativacao(null);
   }
 
   public static List<PixKey> getPixKeysTemplate() {
     return List.of(getPixKeyTemplate(), getPixKeyTemplate(), getPixKeyTemplate());
+  }
+
+  public static List<PixKey> getEmptyPixKeysTemplate() {
+    return Collections.emptyList();
   }
 
   public static PixKeyAlterarInput getPixKeyAlterarTemplate() {
@@ -63,5 +72,16 @@ public class PixKeyTemplate {
         .withNomeCorrentista(NOME_CORRENTISTA)
         .withSobrenomeCorrentista(SOBRENOME_CORRENTISTA)
         .withTipoPessoa(TIPO_PESSOA);
+  }
+
+  public static PixKeyFilter getPixKeyFilterTemplate() {
+    return new PixKeyFilter()
+        .withId(null)
+        .withTipoChave(null)
+        .withAgencia(null)
+        .withConta(null)
+        .withNomeCorrentista(null)
+        .withDataAtivacao(null)
+        .withDataInativacao(null);
   }
 }

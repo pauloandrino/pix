@@ -1,5 +1,6 @@
 package com.pma.pix.utils;
 
+import com.pma.pix.domain.model.PixKey;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -9,6 +10,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 public class PerformRequest {
 
+  public static ResultActions post(MockMvc mockMvc, String apiUrl) throws Exception {
+
+    return mockMvc
+        .perform(MockMvcRequestBuilders.post(apiUrl).contentType(MediaType.APPLICATION_JSON_VALUE))
+        .andDo(print());
+  }
+
   public static ResultActions post(MockMvc mockMvc, String apiUrl, Object object) throws Exception {
 
     return mockMvc
@@ -16,6 +24,26 @@ public class PerformRequest {
             MockMvcRequestBuilders.post(apiUrl)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(JsonMapper.asJsonString(object)))
+        .andDo(print());
+  }
+
+  public static ResultActions post(MockMvc mockMvc, String apiUrl, PixKey object, MediaType mediaType) throws Exception {
+
+    return mockMvc
+            .perform(
+                    MockMvcRequestBuilders.post(apiUrl)
+                            .contentType(mediaType)
+                            .content(JsonMapper.asJsonString(object)))
+            .andDo(print());
+  }
+
+  public static ResultActions post(MockMvc mockMvc, String apiUrl, String body) throws Exception {
+
+    return mockMvc
+        .perform(
+            MockMvcRequestBuilders.post(apiUrl)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(body))
         .andDo(print());
   }
 

@@ -1,11 +1,22 @@
 package com.pma.pix.domain.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.With;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Size;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@With
+@ToString
 public class PixKeyFilter {
 
   private String id;
